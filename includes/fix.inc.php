@@ -87,7 +87,7 @@ if(isset($_SESSION) && is_array($_SESSION) && count($_SESSION)) {
 
 
 // This is for retarded Windows servers not having REQUEST_URI
-
+// LOOOL :)
 if (!isset($_SERVER['REQUEST_URI']))
 {
     if (isset($_SERVER['SCRIPT_NAME'])) {
