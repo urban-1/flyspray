@@ -1,0 +1,57 @@
+# API
+
+The main idea is that this works as a wrapper around backend and project
+functions. It is responsible only for parsing the request and print the 
+responses.
+
+Each action of the API is an individual file. Actions fall into 2two categories:
+
+- Project Related: These are under `actions` folder and work per-project
+
+- Global (Site wide): These are functions like `listProjects` and are under 
+    `global_actions`. The only difference is that they do not require `project`
+    parameter to be set in the request.
+
+## Actions
+
+Each action has a `run()` method. This should return an array which will 
+eventually converted from the API to the correct output format and be printed.
+
+Actions can use the API class (which extends the Req) to get values from the 
+request. Additionally, the main API script provides the following global 
+variables:
+
+- $project: Instance of Project class (only for project related queries)
+- $user: Instance of the user doing the request
+
+## Using the API
+
+### Parameters
+
+The basic parameters needed always are:
+- user: API user name
+- pass: User's password
+- action: Which script will you run (or what do you want from the API)
+
+Optional parameters:
+- debug: will make JSON human readable (if you use wget or "view source" in a browser)
+
+Additional parameters: these may be used by individual API calls (like 'limit'). We
+need to find a way to document those, I think with a comment block on the top of 
+each action script?
+
+Example calls:
+
+- Get the list of task:
+    wget -O- -q 'http://<host>/flyspray/api?user=api&proj=1&action=listTasks&limit=10&pass=XXX&debug=1'
+  
+
+
+### Authentication notice
+
+If your server is not private only and your site operates over http:// (not 
+secure) you should consider creating new users for your APIs. The passwords are
+transmitted clear text and you would like that for your real flyspray user. Even 
+better, you can create and API group with limited permissions and put all the API
+users in this group.
+
