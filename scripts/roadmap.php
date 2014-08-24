@@ -12,6 +12,12 @@ if (!$proj->id) {
     Flyspray::show_error(25);
 }
 
+// Do not allow non-logged in users to view this project
+if (!$user->can_view_project($proj->id)){
+    Flyspray::show_error(L('nopermission'));
+    return;
+}
+
 if($proj->prefs['use_effort_tracking'])
 {
     require_once(BASEDIR . '/includes/class.effort.php');
